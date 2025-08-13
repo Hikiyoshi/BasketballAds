@@ -1,16 +1,23 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DragBall : MonoBehaviour
 {
-    private bool isHolding, isThrow;
+    private bool isHolding;
     private Transform currentBallTransform;
     private Touch touch;
 
+    [SerializeField] private GameObject touchTrailGameObject;
     [SerializeField] private LayerMask ballMask;
 
     [SerializeField] private float forceThrown;
-    
+
+    private void Start()
+    {
+        touchTrailGameObject.SetActive(false);
+    }
+
     private void Update()
     {
         if (Input.touchCount == 0)
@@ -34,6 +41,7 @@ public class DragBall : MonoBehaviour
                 // {
                 //     HoldingBall(touchPos);
                 // }
+                Swiping(touchPos);
                 break;
 
             case TouchPhase.Canceled:
@@ -41,6 +49,12 @@ public class DragBall : MonoBehaviour
                 EndTouch();
                 break;
         }
+    }
+
+    private void Swiping(Vector3 touchPos)
+    {
+        touchTrailGameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(touchPos.x, touchPos.y, 17f));
+        touchTrailGameObject.SetActive(true);
     }
 
     private void FixedUpdate()
@@ -53,6 +67,7 @@ public class DragBall : MonoBehaviour
 
     private void BeginTouch(Vector3 touchPos)
     {
+        //Handle Check Hold Ball
         Ray ray = Camera.main.ScreenPointToRay(touchPos);
 
         RaycastHit hit;
@@ -74,6 +89,7 @@ public class DragBall : MonoBehaviour
         currentBallTransform.GetComponent<Collider>().enabled = false;
 
         float distZ = currentBallTransform.position.z - Camera.main.transform.position.z;
+        Debug.Log(distZ);
 
         Vector3 touchPosBaseZ = new Vector3(touchPos.x, touchPos.y, distZ);
         Vector3 newPos = Camera.main.ScreenToWorldPoint(touchPosBaseZ);
@@ -85,8 +101,6 @@ public class DragBall : MonoBehaviour
         //Throw the ball if holding 
         if (isHolding)
         {
-            isThrow = true;
-
             currentBallTransform.GetComponent<Collider>().enabled = true;
             Rigidbody rb = currentBallTransform.GetComponent<Rigidbody>();
             rb.isKinematic = false;
@@ -94,8 +108,10 @@ public class DragBall : MonoBehaviour
             //Calculate force to thrown
             rb.AddForce(new Vector3(0, 1, 1.5f) * forceThrown, ForceMode.Impulse);
 
-            isThrow = false;
             isHolding = false;
         }
+
+        //End Touch Trail
+        touchTrailGameObject.SetActive(false);
     }
 }

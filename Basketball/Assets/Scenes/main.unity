@@ -274,6 +274,7 @@ MonoBehaviour:
   scoreText: {fileID: 1407449356}
   timeText: {fileID: 1033452000}
   highestText: {fileID: 1780185990}
+  perfectParticle: {fileID: 2878013522007032693}
   playTime: -1
   normalDunkScore: 1
   perfectDunkScore: 2
@@ -515,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0045b03567f0b458198350a94baedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  touchTrailGameObject: {fileID: 2878013518701920564}
   ballMask:
     serializedVersion: 2
     m_Bits: 64
@@ -7277,7 +7279,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Time: 0.5
-  m_PreviewTimeScale: 1
+  m_PreviewTimeScale: 0
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1.7

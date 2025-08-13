@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshPro timeText;
     [SerializeField] private TextMeshPro highestText;
 
+    [Header("VFX"), Space]
+    [SerializeField] private ParticleSystem perfectParticle;
+
     [Header("Settings"), Space]
     //playTime equal -1 when infinity play
     [SerializeField] private float playTime;
@@ -62,7 +65,16 @@ public class GameManager : MonoBehaviour
 
     public void PlusPoint(dunkType dunkType)
     {
-        score += dunkType == dunkType.normal ? normalDunkScore : perfectDunkScore;
+        int plusScore = normalDunkScore;
+
+        if (dunkType == dunkType.perfect)
+        {
+            perfectParticle.Play();
+            plusScore = perfectDunkScore;
+        }
+
+        score += plusScore;
+
         scoreText.text = score.ToString();
 
         Debug.Log("Score: " + score);
