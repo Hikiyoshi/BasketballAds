@@ -92,7 +92,7 @@ public class DragBall : MonoBehaviour
             rb.isKinematic = false;
 
             //Calculate force to thrown
-            rb.AddForce(new Vector3(0, 1, 2) * forceThrown, ForceMode.Impulse);
+            rb.AddForce(new Vector3(0, 1, 1.5f) * forceThrown, ForceMode.Impulse);
 
             isThrow = false;
             isHolding = false;
