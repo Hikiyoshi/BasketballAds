@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshPro timeText;
     [SerializeField] private TextMeshPro highestText;
     [SerializeField] private GameObject selectBallGameObject;
+    [SerializeField] private DragBall player;
 
     [Header("VFX"), Space]
     [SerializeField] private ParticleSystem perfectParticle;
@@ -90,11 +91,13 @@ public class GameManager : MonoBehaviour
 
     public void showSelectBall()
     {
+        player.SetHoldBall(false);
         selectBallGameObject.SetActive(true);
     }
 
     public void HideSelectBall()
     {
+        player.SetHoldBall(true);
         selectBallGameObject.SetActive(false);
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DragBall : MonoBehaviour
 {
+    public bool canHoldBall { get; private set; }
+
     [SerializeField] private GameObject touchTrailGameObject;
     [SerializeField] private Transform ballselectionTransform;
     [SerializeField] private LayerMask ballMask;
@@ -18,6 +20,7 @@ public class DragBall : MonoBehaviour
     private void Start()
     {
         touchTrailGameObject.SetActive(false);
+        canHoldBall = true;
     }
 
     private void Update()
@@ -30,7 +33,7 @@ public class DragBall : MonoBehaviour
         touch = Input.touches[0];
 
         Vector3 touchPos = touch.position;
-        
+
         switch (touch.phase)
         {
             case TouchPhase.Began:
@@ -61,7 +64,6 @@ public class DragBall : MonoBehaviour
 
         //Handle Ball Selection
         float distanceY = startTouchPos.x - touchPos.x;
-        ballselectionTransform.rotation = Quaternion.Euler(0f, distanceY, 0f);
     }
 
     private void FixedUpdate()
@@ -75,6 +77,11 @@ public class DragBall : MonoBehaviour
     private void BeginTouch(Vector3 touchPos)
     {
         startTouchPos = touch.position;
+
+        if (!canHoldBall)
+        {
+            return;
+        }
 
         //Handle Check Hold Ball
         Ray ray = Camera.main.ScreenPointToRay(touchPos);
@@ -107,6 +114,9 @@ public class DragBall : MonoBehaviour
 
     private void EndTouch()
     {
+        //End Touch Trail
+        touchTrailGameObject.SetActive(false);
+
         //Throw the ball if holding 
         if (isHolding)
         {
@@ -119,8 +129,10 @@ public class DragBall : MonoBehaviour
 
             isHolding = false;
         }
+    }
 
-        //End Touch Trail
-        touchTrailGameObject.SetActive(false);
+    public void SetHoldBall(bool canHold)
+    {
+        canHoldBall = canHold;
     }
 }
