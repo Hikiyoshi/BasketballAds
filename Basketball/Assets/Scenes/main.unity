@@ -1224,6 +1224,7 @@ MonoBehaviour:
   timeText: {fileID: 1033452000}
   highestText: {fileID: 1780185990}
   selectBallGameObject: {fileID: 1341799442}
+  player: {fileID: 1801684476}
   perfectParticle: {fileID: 2878013522007032693}
   playTime: -1
   normalDunkScore: 1
@@ -1558,6 +1559,7 @@ GameObject:
   - component: {fileID: 1063095748}
   - component: {fileID: 1063095750}
   - component: {fileID: 1063095749}
+  - component: {fileID: 1063095751}
   m_Layer: 5
   m_Name: SelectedBall
   m_TagString: Untagged
@@ -1581,8 +1583,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -148.5}
-  m_SizeDelta: {x: 300, y: 350}
+  m_AnchoredPosition: {x: 0.5, y: -240}
+  m_SizeDelta: {x: 295, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1063095749
 MonoBehaviour:
@@ -1622,6 +1624,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063095747}
   m_CullTransparentMesh: 1
+--- !u!95 &1063095751
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063095747}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 28aed57a338e4b746a0246b14215b5a5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1154455663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,6 +1789,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1341799443}
+  - component: {fileID: 1341799444}
   m_Layer: 5
   m_Name: SelectBallUI
   m_TagString: Untagged
@@ -1796,6 +1820,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1341799444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341799442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ab7ebd413f32841b6d1519e36f991c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectBall: {fileID: 2878013518752252574}
+  ArrowBtn: {fileID: 1596439374}
+  okBtn: {fileID: 353224392}
+  randomBtn: {fileID: 933921208}
+  setText: {fileID: 1154455665}
+  selectImageGameObject: {fileID: 1063095747}
 --- !u!114 &1407449356 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 892698395204104817, guid: e46d348cca9c4c14b92c170031e64ad7,
@@ -1952,6 +1994,7 @@ GameObject:
   - component: {fileID: 1596439374}
   - component: {fileID: 1596439373}
   - component: {fileID: 1596439372}
+  - component: {fileID: 1596439377}
   m_Layer: 5
   m_Name: ArrowButton
   m_TagString: Untagged
@@ -2090,6 +2133,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1596439370}
   m_CullTransparentMesh: 1
+--- !u!95 &1596439377
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596439370}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 22becc60842476e49afe69815238bbd5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1771900741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2411,6 +2475,7 @@ MonoBehaviour:
   ballMask:
     serializedVersion: 2
     m_Bits: 64
+  selectBall: {fileID: 2878013518752252574}
   forceThrown: 20
 --- !u!4 &1801684477
 Transform:
@@ -4282,7 +4347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &2878013518701920848
 GameObject:
   m_ObjectHideFlags: 0
@@ -5239,14 +5304,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2878013518701920616}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.5465011, y: 0.12685099, z: 0.32696494, w: 0.76048625}
   m_LocalPosition: {x: 0, y: 1, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2878013518752252552}
   m_Father: {fileID: 2878013518752252604}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 48.44, y: 56.05, z: 73.46}
 --- !u!4 &2878013518752252572
 Transform:
   m_ObjectHideFlags: 0
@@ -5292,7 +5357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ballMaterial: {fileID: 2100000, guid: 4ea996293ceebfc200000000000000f5, type: 2}
   ballScriptableObjects:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 297b2ddce3643494a83c22144a31a5a3, type: 2}
   - {fileID: 11400000, guid: 776dc7ad4b85cf048b37d025da1c7d60, type: 2}
   - {fileID: 11400000, guid: 9004907759a1565459acc0cccfa5b668, type: 2}
   - {fileID: 11400000, guid: ba55a3bd5b0860042bea025d7df92307, type: 2}
@@ -5300,7 +5365,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8632af41ee3f8394ab9926aa0f24ec50, type: 2}
   - {fileID: 11400000, guid: e71e037bb71aa6f4381abfe74b80fbe9, type: 2}
   - {fileID: 11400000, guid: ce3b693ea1987194191b16641a666d3a, type: 2}
+  ballTransform:
+  - {fileID: 2878013518752252571}
+  - {fileID: 2878013518752252610}
+  - {fileID: 2878013518752252599}
+  - {fileID: 2878013518752252526}
+  - {fileID: 2878013518752252559}
+  - {fileID: 2878013518752252511}
+  - {fileID: 2878013518752252585}
+  - {fileID: 2878013518752252541}
   currentBall: {fileID: 11400000, guid: 297b2ddce3643494a83c22144a31a5a3, type: 2}
+  selectBallUI: {fileID: 1341799444}
+  ballselectionTransform: {fileID: 2878013518752252604}
+  ballAmount: 8
+  scrollSpeed: 5
 --- !u!4 &2878013518752252575
 Transform:
   m_ObjectHideFlags: 0
@@ -5815,13 +5893,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2878013518701920831}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21303032, y: 0, z: 0, w: 0.9770456}
-  m_LocalPosition: {x: 0, y: 8.8, z: -20}
+  m_LocalRotation: {x: 0.14780942, y: 0, z: 0, w: 0.9890159}
+  m_LocalPosition: {x: 0, y: 6.8, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2878013518752252569}
-  m_LocalEulerAnglesHint: {x: 24.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 17, y: 0, z: 0}
 --- !u!4 &2878013518752252612
 Transform:
   m_ObjectHideFlags: 0

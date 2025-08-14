@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93245411844ddf14db9ed8948befc959, type: 3}
   m_Name: Ball1
   m_EditorClassIdentifier: 
+  ballIndex: 1
   name: ball1
   ballTexture: {fileID: 2800000, guid: 6455dbfb42c0e70d00000000000000d9, type: 3}

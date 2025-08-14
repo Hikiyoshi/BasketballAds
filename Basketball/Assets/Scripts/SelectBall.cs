@@ -7,7 +7,9 @@ public class SelectBall : MonoBehaviour
     [SerializeField] private Material ballMaterial;
 
     [SerializeField] private List<BallScriptableObject> ballScriptableObjects = new List<BallScriptableObject>();
+    [SerializeField] private List<Transform> ballTransform = new List<Transform>();
     [SerializeField] private BallScriptableObject currentBall;
+    [SerializeField] private SelectBallUI selectBallUI;
 
     [SerializeField] private Transform ballselectionTransform;
 
@@ -15,27 +17,42 @@ public class SelectBall : MonoBehaviour
     [SerializeField] private float scrollSpeed = 5f;
 
     public int currentBallIndex { get; private set; }
+    public bool isRotating { get; private set; }
 
     private float anglePerBall;
-    private bool isRotate;
     private Vector3 targetRotation;
+    private Transform currentBallGameObject;
 
     private void Start()
     {
         anglePerBall = 360 / ballAmount;
 
         targetRotation = new Vector3(0f, ballselectionTransform.localRotation.y + -(currentBallIndex * anglePerBall), 0f);
+
+        currentBallGameObject = ballTransform[currentBallIndex];
+        float randomAngle = Random.Range(0f, 360f);
+        currentBallGameObject.Rotate(randomAngle, randomAngle, randomAngle);
     }
 
     private void Update()
     {
-        Quaternion rotation = Quaternion.Euler(targetRotation);
-            ballselectionTransform.rotation = Quaternion.Slerp(ballselectionTransform.rotation, rotation, scrollSpeed * Time.deltaTime);
-
-        if (ballselectionTransform.rotation == Quaternion.Euler(targetRotation))
+        if (isRotating)
         {
-            isRotate = false;
+            Quaternion rotation = Quaternion.Euler(targetRotation);
+            ballselectionTransform.rotation = Quaternion.Slerp(ballselectionTransform.rotation, rotation, scrollSpeed * Time.deltaTime);
         }
+
+        if (Quaternion.Angle(ballselectionTransform.rotation, Quaternion.Euler(targetRotation)) < 0.1f)
+        {
+            isRotating = false;
+        }
+
+        if (currentBallGameObject == null)
+        {
+            return;
+        }
+
+        currentBallGameObject.Rotate(new Vector3(1, 1, 1) * 20f * Time.deltaTime);
     }
 
     public void ScrollBall(int index)
@@ -56,7 +73,14 @@ public class SelectBall : MonoBehaviour
 
         targetRotation = new Vector3(0f, ballselectionTransform.localRotation.y + angle, 0f);
 
-        isRotate = true;
+        currentBallGameObject = ballTransform[currentBallIndex];
+
+        float randomAngle = Random.Range(0f, 360f);
+        currentBallGameObject.Rotate(randomAngle, randomAngle, randomAngle);
+
+        isRotating = true;
+
+        selectBallUI.UpdateSetText();
     }
 
     public void ChangeSkinBall()
