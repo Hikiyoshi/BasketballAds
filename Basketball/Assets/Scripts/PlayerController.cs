@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragBall : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public bool canHoldBall { get; private set; }
 
     [SerializeField] private GameObject touchTrailGameObject;
     [SerializeField] private Transform ballselectionTransform;
     [SerializeField] private LayerMask ballMask;
+    [SerializeField] private SelectBall selectBall;
 
     [SerializeField] private float forceThrown;
 
@@ -41,6 +42,9 @@ public class DragBall : MonoBehaviour
                 break;
 
             case TouchPhase.Stationary:
+                startTouchPos = touch.position;
+                break;
+
             case TouchPhase.Moved:
                 // if (isHolding)
                 // {
@@ -64,6 +68,20 @@ public class DragBall : MonoBehaviour
 
         //Handle Ball Selection
         float distanceY = startTouchPos.x - touchPos.x;
+
+        int ballAmount = selectBall.GetBallAmount();
+        int currentBallIndex = selectBall.currentBallIndex;
+
+        if (distanceY > 40f)
+        {
+            selectBall.ScrollBall(--currentBallIndex);
+        }
+        else if (distanceY < -40f)
+        {
+            selectBall.ScrollBall(++currentBallIndex);
+        }
+        
+        startTouchPos = touch.position;
     }
 
     private void FixedUpdate()

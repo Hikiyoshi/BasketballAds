@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshPro timeText;
     [SerializeField] private TextMeshPro highestText;
     [SerializeField] private GameObject selectBallGameObject;
-    [SerializeField] private DragBall player;
+    [SerializeField] private PlayerController player;
 
     [Header("VFX"), Space]
     [SerializeField] private ParticleSystem perfectParticle;

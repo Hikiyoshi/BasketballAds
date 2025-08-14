@@ -23,15 +23,14 @@ public class SelectBall : MonoBehaviour
     private void Start()
     {
         anglePerBall = 360 / ballAmount;
+
+        targetRotation = new Vector3(0f, ballselectionTransform.localRotation.y + -(currentBallIndex * anglePerBall), 0f);
     }
 
     private void Update()
     {
-        if (isRotate)
-        {
-            Quaternion rotation = Quaternion.Euler(targetRotation);
+        Quaternion rotation = Quaternion.Euler(targetRotation);
             ballselectionTransform.rotation = Quaternion.Slerp(ballselectionTransform.rotation, rotation, scrollSpeed * Time.deltaTime);
-        }
 
         if (ballselectionTransform.rotation == Quaternion.Euler(targetRotation))
         {
@@ -44,6 +43,11 @@ public class SelectBall : MonoBehaviour
         if (index >= ballAmount)
         {
             index = 0;
+        }
+
+        if (index < 0)
+        {
+            index = ballAmount - 1;
         }
 
         currentBallIndex = index;
