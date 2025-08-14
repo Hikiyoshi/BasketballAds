@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class DragBall : MonoBehaviour
 {
-    private bool isHolding;
-    private Transform currentBallTransform;
-    private Touch touch;
-
     [SerializeField] private GameObject touchTrailGameObject;
+    [SerializeField] private Transform ballselectionTransform;
     [SerializeField] private LayerMask ballMask;
 
     [SerializeField] private float forceThrown;
+
+    private Touch touch;
+    private bool isHolding;
+    private Transform currentBallTransform;
+    private Vector3 startTouchPos;
 
     private void Start()
     {
@@ -28,7 +30,7 @@ public class DragBall : MonoBehaviour
         touch = Input.touches[0];
 
         Vector3 touchPos = touch.position;
-
+        
         switch (touch.phase)
         {
             case TouchPhase.Began:
@@ -53,8 +55,13 @@ public class DragBall : MonoBehaviour
 
     private void Swiping(Vector3 touchPos)
     {
+        //Handle Touch Trail
         touchTrailGameObject.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(touchPos.x, touchPos.y, 17f));
         touchTrailGameObject.SetActive(true);
+
+        //Handle Ball Selection
+        float distanceY = startTouchPos.x - touchPos.x;
+        ballselectionTransform.rotation = Quaternion.Euler(0f, distanceY, 0f);
     }
 
     private void FixedUpdate()
@@ -67,6 +74,8 @@ public class DragBall : MonoBehaviour
 
     private void BeginTouch(Vector3 touchPos)
     {
+        startTouchPos = touch.position;
+
         //Handle Check Hold Ball
         Ray ray = Camera.main.ScreenPointToRay(touchPos);
 

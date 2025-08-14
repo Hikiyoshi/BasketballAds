@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : MonoBehaviour
+public class BallHandler : MonoBehaviour
 {
     private bool checkedTopTrigger = false;
     private bool isPerfect = true;

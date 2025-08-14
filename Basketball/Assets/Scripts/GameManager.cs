@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshPro scoreText;
     [SerializeField] private TextMeshPro timeText;
     [SerializeField] private TextMeshPro highestText;
+    [SerializeField] private GameObject selectBallGameObject;
 
     [Header("VFX"), Space]
     [SerializeField] private ParticleSystem perfectParticle;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
     {
         if (_playTime == -1f)
         {
-            return;            
+            return;
         }
 
         _playTime -= Time.deltaTime;
@@ -59,8 +60,15 @@ public class GameManager : MonoBehaviour
 
         if (_playTime <= 0)
         {
-            Debug.Log("Game Over");
+            GameOver();
         }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("Game Over");
+        highestScore = highestScore > score ? highestScore : score;
+        score = 0;
     }
 
     public void PlusPoint(dunkType dunkType)
@@ -78,5 +86,15 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
 
         Debug.Log("Score: " + score);
+    }
+
+    public void showSelectBall()
+    {
+        selectBallGameObject.SetActive(true);
+    }
+
+    public void HideSelectBall()
+    {
+        selectBallGameObject.SetActive(false);
     }
 }
