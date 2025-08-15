@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     [Header("VFX"), Space]
     [SerializeField] private ParticleSystem perfectParticle;
+    [SerializeField] private ParticleSystem ChainLightsFull;
 
     [Header("Settings"), Space]
     //playTime equal -1 when infinity play
@@ -47,6 +48,8 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
 
         Instance = this;
+
+        ChainLightsFull.Play();
     }
 
     private void Update()
@@ -92,12 +95,20 @@ public class GameManager : MonoBehaviour
     public void showSelectBall()
     {
         player.SetHoldBall(false);
+        player.SetCanSelect(true);
+
         selectBallGameObject.SetActive(true);
+
+        ChainLightsFull.Pause();
     }
 
     public void HideSelectBall()
     {
         player.SetHoldBall(true);
+        player.SetCanSelect(false);
+
         selectBallGameObject.SetActive(false);
+
+        ChainLightsFull.Play();
     }
 }

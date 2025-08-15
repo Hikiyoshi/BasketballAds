@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class BallHandler : MonoBehaviour
 {
+    private Rigidbody rb;
+
     private bool checkedTopTrigger = false;
     private bool isPerfect = true;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(Vector3.down * 9.8f, ForceMode.Force);
+    }
 
     void OnTriggerEnter(Collider other)
     {
