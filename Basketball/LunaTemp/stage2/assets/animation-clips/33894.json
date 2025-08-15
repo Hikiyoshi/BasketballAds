@@ -1,0 +1,1 @@
+{"id":33894,"path":"Assets/Animations/RotateRingAnimation.anim","assetBundleId":-1,"data":["RotateRingAnimation",0,1,50,[["",0,"UnityEngine.Transform","localEulerAnglesRaw.x",[0,28],[]],["",0,"UnityEngine.Transform","localEulerAnglesRaw.y",[28,28],[]],["",0,"UnityEngine.Transform","localEulerAnglesRaw.z",[56,28],[]]],[],true,2,[0,0,0,0,0,0],0,null,[null,null]]}
