@@ -8,11 +8,22 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public event Action OnBallCollide;
+    public event Action OnPerfect;
+    public event Action OnGameStart;
+    public event Action OnGameComplete;
+
     [Header("References"), Space]
     [SerializeField] private TextMeshPro scoreText;
     [SerializeField] private TextMeshPro timeText;
     [SerializeField] private TextMeshPro highestText;
+    [SerializeField] private TextMeshProUGUI scoreGameOverText;
+    [SerializeField] private TextMeshProUGUI highestGameOverText;
     [SerializeField] private GameObject selectBallGameObject;
+    [SerializeField] private GameObject perfectTextGameObject;
+    [SerializeField] private GameObject gameoverUIGameObject;
+    [SerializeField] private GameObject buttonPanelGameObject;
+    [SerializeField] private GameObject newHightScoreImageGameObject;
     [SerializeField] private PlayerController player;
 
     [Header("VFX"), Space]
@@ -34,6 +45,7 @@ public class GameManager : MonoBehaviour
     private float score = 0;
     private float highestScore = 0;
     private float _playTime;
+    private bool canCountTime = true;
 
     private void Awake()
     {
@@ -56,6 +68,11 @@ public class GameManager : MonoBehaviour
     {
         if (_playTime == -1f)
         {
+            canCountTime = false;
+        }
+        
+        if (!canCountTime)
+        {
             return;
         }
 
@@ -71,8 +88,54 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Game Over");
-        highestScore = highestScore > score ? highestScore : score;
+
+        canCountTime = false;
+
+        // Time.timeScale = 0;
+
+        OnGameComplete?.Invoke();
+
+        gameoverUIGameObject.SetActive(true);
+
+        if (highestScore < score)
+        {
+            highestScore = score;
+            newHightScoreImageGameObject.SetActive(true);
+        }
+        else
+        {
+            newHightScoreImageGameObject.SetActive(false);
+        }
+
+        scoreGameOverText.text = "Score: " + score;
+        highestGameOverText.text = "Highest: " + highestScore;
+    }
+
+    private void SetUpScore()
+    {
+        _playTime = playTime;
+
+        scoreText.text = score.ToString();
+        timeText.text = ((int)_playTime).ToString();
+        highestText.text = highestScore.ToString();
+    }
+
+    public void StartGame()
+    {
+        canCountTime = true;
+
         score = 0;
+
+        SetUpScore();
+
+        gameoverUIGameObject.SetActive(false);
+
+        OnGameStart?.Invoke();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void PlusPoint(dunkType dunkType)
@@ -82,6 +145,10 @@ public class GameManager : MonoBehaviour
         if (dunkType == dunkType.perfect)
         {
             perfectParticle.Play();
+            OnPerfect?.Invoke();
+
+            StartCoroutine(showPerfectText());
+
             plusScore = perfectDunkScore;
         }
 
@@ -92,23 +159,52 @@ public class GameManager : MonoBehaviour
         Debug.Log("Score: " + score);
     }
 
+    private IEnumerator showPerfectText()
+    {
+        perfectTextGameObject.SetActive(true);
+
+        yield return new WaitForSeconds(.5f);
+
+        perfectTextGameObject.SetActive(false);
+    }
+
     public void showSelectBall()
     {
+        canCountTime = false;
+
         player.SetHoldBall(false);
         player.SetCanSelect(true);
 
-        selectBallGameObject.SetActive(true);
+        StartCoroutine(WaitBeforeSet());
 
         ChainLightsFull.Pause();
     }
 
+    private IEnumerator WaitBeforeSet()
+    {
+        buttonPanelGameObject.GetComponent<Animator>().SetTrigger("play");
+
+        yield return new WaitForSeconds(.4f);
+
+        selectBallGameObject.SetActive(true);
+    }
+
     public void HideSelectBall()
     {
+        canCountTime = true;
+
         player.SetHoldBall(true);
         player.SetCanSelect(false);
+
+        buttonPanelGameObject.GetComponent<Animator>().SetTrigger("play");
 
         selectBallGameObject.SetActive(false);
 
         ChainLightsFull.Play();
+    }
+
+    public void PlaySfxBallCollide()
+    {
+        OnBallCollide?.Invoke();
     }
 }

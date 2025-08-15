@@ -47,6 +47,8 @@ public class BallHandler : MonoBehaviour
     {
         if (collision.transform.tag == "checkPerfectTag")
         {
+            GameManager.Instance.PlaySfxBallCollide();
+            
             isPerfect = false;
         }
     }

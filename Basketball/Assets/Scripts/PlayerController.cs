@@ -169,9 +169,9 @@ public class PlayerController : MonoBehaviour
                 distVerticle = ConvertValue(distanceY, 0f, maxDistanceVerticle, 0f, 1f);
             }
 
-            float distHorizontal = ConvertValue(distanceX, 0f, maxDistanceHorizontal, 0f, .2f);
+            float distHorizontal = ConvertValue(distanceX, 0f, maxDistanceHorizontal, 0f, .15f);
 
-            Vector3 direction = new Vector3(-distHorizontal, -distVerticle, .7f);
+            Vector3 direction = new Vector3(-distHorizontal, -distVerticle, .8f);
             Debug.Log(direction);
             rb.AddForce(direction * forceThrown, ForceMode.Impulse);
             rb.AddTorque(Vector3.right * forceTorque, ForceMode.Impulse);
